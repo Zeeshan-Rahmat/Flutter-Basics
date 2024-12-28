@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,16 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: Material(
-        child: Center(
-          child: Text(
-            'First Day of Flutter',
-            style: TextStyle(
-              fontSize: 30,
-            ),
-          ),
-        ),
-      ),
+      home: HomePage()
     );
   }
 }
