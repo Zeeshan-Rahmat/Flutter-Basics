@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
       ),
       body: const Center(
         child: Text(
-          'First Day of Flutter',
+          'Second Day of Flutter',
           style: TextStyle(
             fontSize: 30,
           ),
