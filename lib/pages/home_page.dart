@@ -9,10 +9,11 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter Basics'),
         centerTitle: true,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       body: const Center(
         child: Text(
-          'Second Day of Flutter',
+          'Third Day of Flutter',
           style: TextStyle(
             fontSize: 30,
           ),
