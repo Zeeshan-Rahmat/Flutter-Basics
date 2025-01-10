@@ -17,17 +17,19 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     loadData();
-    setState(() {});
   }
 
-  loadData() async {
+  void loadData() async {
     final catalogJSON =
         await rootBundle.loadString('assets/files/catalog.json');
-    final decodedJSON = jsonDecode(catalogJSON);
-    var products = decodedJSON['products'];
+    final decodedJSON = jsonDecode(catalogJSON) as Map<String, dynamic>;
+    var products = decodedJSON['products'] as List<dynamic>;
 
-    CatalogModel.items =
-        List.from(products).map<Item>((item) => Item.fromMap(item)).toList();
+    setState(() {
+      CatalogModel.items = products
+          .map<Item>((item) => Item.fromMap(item as Map<String, dynamic>))
+          .toList();
+    });
   }
 
   @override
@@ -37,17 +39,17 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Flutter Basics'),
         centerTitle: true,
       ),
-      body: CatalogModel.items == null
+      body: CatalogModel.items.isEmpty == true
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView.builder(
-                itemCount: CatalogModel.items!.length,
+                itemCount: CatalogModel.items.length,
                 itemBuilder: (constext, index) {
                   return ItemWidget(
-                    item: CatalogModel.items![index],
+                    item: CatalogModel.items[index],
                   );
                 },
               ),

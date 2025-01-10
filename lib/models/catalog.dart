@@ -1,11 +1,8 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
-
 class Item {
-  final String id;
+  final int id;
   final String name;
   final String desc;
-  final double price;
+  final num price;
   final String color;
   final String image;
 
@@ -19,10 +16,10 @@ class Item {
   });
 
   Item copyWith({
-    String? id,
+    int? id,
     String? name,
     String? desc,
-    double? price,
+    num? price,
     String? color,
     String? image,
   }) {
@@ -49,48 +46,16 @@ class Item {
 
   factory Item.fromMap(Map<String, dynamic> map) {
     return Item(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
       desc: map['desc'] as String,
-      price: map['price'] as double,
+      price: map['price'] as num,
       color: map['color'] as String,
       image: map['image'] as String,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Item.fromJson(String source) =>
-      Item.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'Item(id: $id, name: $name, desc: $desc, price: $price, color: $color, image: $image)';
-  }
-
-  @override
-  bool operator ==(covariant Item other) {
-    if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.name == name &&
-        other.desc == desc &&
-        other.price == price &&
-        other.color == color &&
-        other.image == image;
-  }
-
-  @override
-  int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        desc.hashCode ^
-        price.hashCode ^
-        color.hashCode ^
-        image.hashCode;
-  }
 }
 
 class CatalogModel {
-  static List<Item>? items;
+  static List<Item> items = [];
 }
