@@ -3,6 +3,7 @@ import "package:flutter/services.dart";
 import 'dart:convert';
 import "package:flutter_basics/models/catalog.dart";
 import "package:flutter_basics/widgets/custom_drawer.dart";
+import "package:flutter_basics/widgets/item_grid_widget.dart";
 import "package:flutter_basics/widgets/item_widget.dart";
 
 class HomePage extends StatefulWidget {
@@ -45,10 +46,13 @@ class _HomePageState extends State<HomePage> {
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),
-              child: ListView.builder(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
                 itemCount: CatalogModel.items.length,
                 itemBuilder: (constext, index) {
-                  return ItemWidget(
+                  return ItemGridWidget(
                     item: CatalogModel.items[index],
                   );
                 },
