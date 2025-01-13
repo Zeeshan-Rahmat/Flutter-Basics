@@ -3,8 +3,8 @@ import "package:flutter/services.dart";
 import 'dart:convert';
 import "package:flutter_basics/models/catalog.dart";
 import "package:flutter_basics/widgets/custom_drawer.dart";
-import "package:flutter_basics/widgets/item_grid_widget.dart";
 import "package:flutter_basics/widgets/item_widget.dart";
+import "package:flutter_basics/widgets/my_theme.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,29 +36,68 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyTheme.creamColor,
       appBar: AppBar(
         title: const Text('Flutter Basics'),
         centerTitle: true,
       ),
-      body: CatalogModel.items.isEmpty == true
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Catalog App',
+              style: TextStyle(
+                color: MyTheme.darkBluishColor,
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 6),
+              child: Text(
+                'Trending Products',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ListViewWidget(item: CatalogModel.items)
+          ],
+        ),
+      ),
+      drawer: const MyDrawer(),
+    );
+  }
+}
+
+class ListViewWidget extends StatelessWidget {
+  final List<Item> item;
+  const ListViewWidget({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: item.isEmpty == true
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: CatalogModel.items.length,
-                itemBuilder: (constext, index) {
-                  return ItemGridWidget(
-                    item: CatalogModel.items[index],
-                  );
-                },
-              ),
+          : ListView.builder(
+              itemCount: item.length,
+              itemBuilder: (constext, index) {
+                return ItemWidget(
+                  item: item[index],
+                );
+              },
             ),
-      drawer: const MyDrawer(),
     );
   }
 }
