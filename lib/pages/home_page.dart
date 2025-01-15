@@ -1,7 +1,9 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import 'dart:convert';
 import "package:flutter_basics/models/catalog.dart";
+import "package:flutter_basics/utils/my_routes.dart";
 import "package:flutter_basics/widgets/custom_drawer.dart";
 import "package:flutter_basics/widgets/item_widget.dart";
 import "package:flutter_basics/widgets/my_theme.dart";
@@ -39,7 +41,12 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: MyTheme.creamColor,
       appBar: AppBar(
         title: const Text('Flutter Basics'),
-        centerTitle: true,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, MyRoutes.cartRoute);
+        },
+        child: const Icon(CupertinoIcons.cart),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

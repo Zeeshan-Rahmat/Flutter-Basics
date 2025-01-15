@@ -9,6 +9,7 @@ class MyTheme {
           backgroundColor: Colors.white,
           elevation: 0.0,
           iconTheme: IconThemeData(color: Colors.black),
+          centerTitle: true,
           titleTextStyle: TextStyle(
             color: Colors.black,
             fontSize: 20,

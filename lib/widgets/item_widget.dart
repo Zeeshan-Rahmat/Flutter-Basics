@@ -92,13 +92,15 @@ class ItemWidget extends StatelessWidget {
                           style: TextButton.styleFrom(
                             elevation: 0.0,
                             backgroundColor: Theme.of(context).primaryColor,
-                            padding: const EdgeInsets.all(3),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                            ),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
                           child: const Text(
-                            'Buy',
+                            'Add to Cart',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,

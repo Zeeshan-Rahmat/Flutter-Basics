@@ -12,9 +12,11 @@ class ItemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double textGap = 8;
+
     return Scaffold(
       backgroundColor: MyTheme.creamColor,
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: MyTheme.creamColor),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Row(
@@ -34,13 +36,13 @@ class ItemPage extends StatelessWidget {
                 elevation: 0.0,
                 backgroundColor: Theme.of(context).primaryColor,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
               child: const Text(
-                'Buy',
+                'Add to Cart',
                 style: TextStyle(
                   fontSize: 22,
                   color: Colors.white,
@@ -75,27 +77,41 @@ class ItemPage extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  item.desc,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey,
+                  const SizedBox(height: textGap),
+                  Text(
+                    item.desc,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
+                  const SizedBox(height: textGap + 5),
+                  const Text(
+                    'Kasd elitr diam nonumy erat tempor sit sanctus vero et consetetur, accusam diam ipsum lorem eos et labore. Labore sanctus. Kasd elitr diam nonumy erat tempor sit sanctus vero et consetetur, accusam diam ipsum lorem eos et labore. Labore sanctus.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                    ),
+                    textAlign: TextAlign.center,
+                    maxLines: 6,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
             ),
           )
         ],
