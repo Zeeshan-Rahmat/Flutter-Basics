@@ -21,7 +21,6 @@ class ItemWidget extends StatelessWidget {
         ),
       ),
       child: Card(
-        color: Colors.white,
         margin: const EdgeInsets.symmetric(vertical: 8),
         child: Padding(
           padding: const EdgeInsets.all(padding),
@@ -33,7 +32,6 @@ class ItemWidget extends StatelessWidget {
                 height: 120,
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: MyTheme.creamColor,
                   borderRadius: BorderRadius.circular(borderRadius),
                 ),
                 child: ClipRRect(
@@ -91,7 +89,6 @@ class ItemWidget extends StatelessWidget {
                           onPressed: () {},
                           style: TextButton.styleFrom(
                             elevation: 0.0,
-                            backgroundColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 15,
                             ),

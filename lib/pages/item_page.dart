@@ -15,7 +15,6 @@ class ItemPage extends StatelessWidget {
     const double textGap = 8;
 
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
       appBar: AppBar(backgroundColor: MyTheme.creamColor),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

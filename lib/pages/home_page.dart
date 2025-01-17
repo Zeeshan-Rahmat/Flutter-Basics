@@ -38,7 +38,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyTheme.creamColor,
       appBar: AppBar(
         title: const Text('Flutter Basics'),
       ),
@@ -55,23 +54,16 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               'Catalog App',
-              style: TextStyle(
-                color: MyTheme.darkBluishColor,
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(
               height: 10,
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 6),
+            Padding(
+              padding: const EdgeInsets.only(left: 6),
               child: Text(
                 'Trending Products',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall,
               ),
             ),
             const SizedBox(
