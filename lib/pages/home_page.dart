@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.pushNamed(context, MyRoutes.cartRoute);
         },
-        child: const Icon(CupertinoIcons.cart),
+        child: Icon(CupertinoIcons.cart, color: MyTheme.dark_brightColor,),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

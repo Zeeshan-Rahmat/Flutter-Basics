@@ -30,23 +30,46 @@ class MyTheme {
       );
 
   static ThemeData darkTheme(BuildContext context) => ThemeData.dark().copyWith(
+        colorScheme: ColorScheme.fromSeed(seedColor: dark_primaryColor),
+        primaryColor: dark_primaryColor,
+        primaryColorLight: dark_secondaryColor,
         textTheme: customTextTheme(),
         scaffoldBackgroundColor: dark_primaryColor,
         shadowColor: dark_primaryColor,
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: TextStyle(
+            color: dark_secondaryColor,
+          ),
+          labelStyle: TextStyle(
+            color: dark_ternaryColor,
+          ),
+        ),
         cardTheme: CardTheme(
           color: dark_secondaryColor,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-          backgroundColor: WidgetStatePropertyAll(dark_primaryColor),
-        )),
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
+          style: ButtonStyle(
+            backgroundColor: WidgetStatePropertyAll(dark_primaryColor),
+            textStyle: WidgetStatePropertyAll(TextStyle(
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              color: MyTheme.dark_brightColor,
+              fontSize: 12,
+            )),
+          ),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: dark_secondaryColor,
+        ),
+        iconTheme: IconThemeData(
+          color: dark_brightColor,
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: dark_secondaryColor,
           elevation: 0.0,
-          iconTheme: IconThemeData(color: Colors.black),
+          iconTheme: IconThemeData(color: dark_brightColor),
           centerTitle: true,
           titleTextStyle: TextStyle(
-            color: Colors.black,
+            color: dark_brightColor,
             fontSize: 20,
           ),
         ),
@@ -67,11 +90,50 @@ TextTheme customTextTheme() {
       fontSize: 20,
       fontWeight: FontWeight.bold,
     ),
+    titleLarge: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_brightColor,
+      fontSize: 26,
+      fontWeight: FontWeight.bold,
+    ),
+    titleMedium: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_brightColor,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    ),
+    labelLarge: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_brightColor,
+      fontSize: 22,
+      fontWeight: FontWeight.bold,
+    ),
     labelMedium: TextStyle(
       fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_brightColor,
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    labelSmall: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_brightColor,
+      fontSize: 14,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_ternaryColor,
+      fontSize: 20,
     ),
     bodyMedium: TextStyle(
       fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_ternaryColor,
+      fontSize: 16,
+    ),
+    bodySmall: TextStyle(
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      color: MyTheme.dark_ternaryColor,
+      fontSize: 14,
     ),
   );
 }

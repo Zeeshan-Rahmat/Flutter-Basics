@@ -33,6 +33,7 @@ class ItemWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius),
+                  color: Theme.of(context).primaryColor,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(borderRadius),
@@ -59,18 +60,12 @@ class ItemWidget extends StatelessWidget {
                   children: [
                     Text(
                       item.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
                     Text(
                       item.desc,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                      style: Theme.of(context).textTheme.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -79,11 +74,7 @@ class ItemWidget extends StatelessWidget {
                       children: [
                         Text(
                           "\$${item.price.toStringAsFixed(2)}",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: MyTheme.darkBluishColor,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                         ElevatedButton(
                           onPressed: () {},
@@ -96,12 +87,9 @@ class ItemWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Add to Cart',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.labelSmall,
                           ),
                         ),
                       ],

@@ -32,7 +32,6 @@ class _LogInPageState extends State<LogInPage> {
   Widget build(BuildContext context) {
     const heightBetween = 25.0;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -45,10 +44,7 @@ class _LogInPageState extends State<LogInPage> {
             ),
             Text(
               'Welcome $name',
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(
               height: heightBetween,
@@ -97,7 +93,7 @@ class _LogInPageState extends State<LogInPage> {
                       height: heightBetween,
                     ),
                     Material(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).primaryColorLight,
                       borderRadius: BorderRadius.circular(
                         isClicked ? 50 : 8,
                       ),
