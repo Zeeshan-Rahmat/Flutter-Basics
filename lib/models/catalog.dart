@@ -58,4 +58,8 @@ class Item {
 
 class CatalogModel {
   static List<Item> items = [];
+
+  static getByID(int id) => items.firstWhere((item) => item.id == id);
+
+  static getByPostion(int pos) => items[pos];
 }
