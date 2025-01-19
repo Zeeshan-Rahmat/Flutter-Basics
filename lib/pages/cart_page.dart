@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/models/cart.dart';
 import 'package:flutter_basics/models/catalog.dart';
 
 class CartPage extends StatelessWidget {
@@ -27,7 +28,14 @@ class CartPage extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          duration: Duration(seconds: 3),
+                          content: Text("Buying not Supported yet."),
+                        ),
+                      );
+                    },
                     style: TextButton.styleFrom(
                       elevation: 0.0,
                       backgroundColor: Theme.of(context).primaryColorLight,
@@ -60,48 +68,56 @@ class _CartItemList extends StatefulWidget {
 }
 
 class __CartItemListState extends State<_CartItemList> {
+  final List<Item> _items = CartModal().items;
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: CatalogModel.items.length,
-        itemBuilder: (context, indeex) {
-          final Item item = CatalogModel.items[indeex];
-          return Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListTile(
-                leading: SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: ClipRRect(
-                    child: Image.network(
-                      item.image,
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.broken_image,
-                          size: 50,
-                          color: Colors.grey,
-                        );
-                      },
+    return _items.isEmpty
+        ? Center(
+            child: Text(
+              'Your Cart is Empty',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
+          )
+        : ListView.builder(
+            itemCount: _items.length,
+            itemBuilder: (context, index) {
+              final Item item = _items[index];
+              return Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListTile(
+                    leading: SizedBox(
+                      width: 60,
+                      height: 60,
+                      child: ClipRRect(
+                        child: Image.network(
+                          item.image,
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Icon(
+                              Icons.broken_image,
+                              size: 50,
+                              color: Colors.grey,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      item.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      '\$${item.price.toStringAsFixed(2)}',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    trailing: const Icon(
+                      Icons.remove_circle_rounded,
+                      color: Colors.redAccent,
                     ),
                   ),
                 ),
-                title: Text(
-                  item.name,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                subtitle: Text(
-                  '\$${item.price.toStringAsFixed(2)}',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                trailing: const Icon(
-                  Icons.remove_circle_rounded,
-                  color: Colors.redAccent,
-                ),
-              ),
-            ),
-          );
-        });
+              );
+            });
   }
 }
