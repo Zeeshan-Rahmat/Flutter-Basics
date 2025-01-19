@@ -59,7 +59,7 @@ class Item {
 class CatalogModel {
   static List<Item> items = [];
 
-  static getByID(int id) => items.firstWhere((item) => item.id == id);
+  Item getByID(int id) => items.firstWhere((item) => item.id == id);
 
-  static getByPostion(int pos) => items[pos];
+  Item getByPostion(int pos) => items[pos];
 }
