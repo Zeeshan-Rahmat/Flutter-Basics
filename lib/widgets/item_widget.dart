@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_basics/models/catalog.dart';
 import 'package:flutter_basics/pages/item_page.dart';
+import 'package:flutter_basics/pages/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemWidget extends StatelessWidget {
+class ItemWidget extends ConsumerStatefulWidget {
   final Item item;
 
   const ItemWidget({super.key, required this.item});
 
   @override
+  ConsumerState<ItemWidget> createState() => _ItemWidgetState();
+}
+
+class _ItemWidgetState extends ConsumerState<ItemWidget> {
+  @override
   Widget build(BuildContext context) {
+    final cart = ref.watch(cartProvider);
+
     const double padding = 16;
     const double borderRadius = 8;
+
+    final bool isAdded = cart.items.contains(widget.item);
 
     return InkWell(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ItemPage(item: item),
+          builder: (context) => ItemPage(item: widget.item),
         ),
       ),
       child: Card(
@@ -32,14 +43,14 @@ class ItemWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(borderRadius),
-                  color: Theme.of(context).primaryColor,
+                  color: Theme.of(context).primaryColorDark,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(borderRadius),
                   child: Hero(
-                    tag: Key(item.id.toString()),
+                    tag: Key(widget.item.id.toString()),
                     child: Image.network(
-                      item.image,
+                      widget.item.image,
                       fit: BoxFit.contain,
                       errorBuilder: (context, error, stackTrace) {
                         return const Icon(
@@ -58,12 +69,12 @@ class ItemWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.name,
+                      widget.item.name,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      item.desc,
+                      widget.item.desc,
                       style: Theme.of(context).textTheme.bodySmall,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -72,11 +83,25 @@ class ItemWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "\$${item.price.toStringAsFixed(2)}",
+                          "\$${widget.item.price.toStringAsFixed(2)}",
                           style: Theme.of(context).textTheme.labelMedium,
                         ),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (isAdded) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  duration: Duration(seconds: 2),
+                                  content: Text("Item is Already Added"),
+                                ),
+                              );
+                            } else {
+                              ref.read(cartProvider.notifier).addItem(widget.item);
+                              setState(() {
+                                
+                              });
+                            }
+                          },
                           style: TextButton.styleFrom(
                             elevation: 0.0,
                             padding: const EdgeInsets.symmetric(
@@ -86,11 +111,16 @@ class ItemWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(borderRadius),
                             ),
                           ),
-                          child: Text(
-                            'Add to Cart',
-                            style: Theme.of(context).textTheme.labelSmall,
-                          ),
-                        ),
+                          child: isAdded
+                              ? Icon(
+                                  Icons.done,
+                                  color: Theme.of(context).primaryColorLight,
+                                )
+                              : Icon(
+                                  Icons.add_shopping_cart_rounded,
+                                  color: Theme.of(context).primaryColorLight,
+                                ),
+                        )
                       ],
                     )
                   ],

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_basics/models/cart.dart';
 import 'package:flutter_basics/pages/cart_page.dart';
 import 'package:flutter_basics/pages/home_page.dart';
 import 'package:flutter_basics/pages/log_in_page.dart';
 import 'package:flutter_basics/utils/my_routes.dart';
 import 'package:flutter_basics/widgets/my_theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final cartProvider = StateNotifierProvider<CartNotifier, CartModal>(
+  (ref) => CartNotifier(
+    CartModal(),
+  ),
+);
 
 void main() {
   runApp(

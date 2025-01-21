@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_basics/models/cart.dart';
 import 'package:flutter_basics/models/catalog.dart';
+import 'package:flutter_basics/pages/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends ConsumerStatefulWidget {
   const CartPage({super.key});
 
   @override
+  ConsumerState<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends ConsumerState<CartPage> {
+  @override
   Widget build(BuildContext context) {
+    final totalPrice = ref.watch(cartProvider).totalPrice;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
@@ -24,7 +31,7 @@ class CartPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "\$9999",
+                    "\$$totalPrice",
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   ElevatedButton(
@@ -38,7 +45,7 @@ class CartPage extends StatelessWidget {
                     },
                     style: TextButton.styleFrom(
                       elevation: 0.0,
-                      backgroundColor: Theme.of(context).primaryColorLight,
+                      backgroundColor: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.symmetric(
                           horizontal: 30, vertical: 10),
                       shape: RoundedRectangleBorder(
@@ -60,18 +67,19 @@ class CartPage extends StatelessWidget {
   }
 }
 
-class _CartItemList extends StatefulWidget {
+class _CartItemList extends ConsumerStatefulWidget {
   const _CartItemList({super.key});
 
   @override
-  State<_CartItemList> createState() => __CartItemListState();
+  ConsumerState<_CartItemList> createState() => _CartItemListState();
 }
 
-class __CartItemListState extends State<_CartItemList> {
-  final List<Item> _items = CartModal().items;
+class _CartItemListState extends ConsumerState<_CartItemList> {
   @override
   Widget build(BuildContext context) {
-    return _items.isEmpty
+    final items = ref.watch(cartProvider).items;
+
+    return items.isEmpty
         ? Center(
             child: Text(
               'Your Cart is Empty',
@@ -79,43 +87,48 @@ class __CartItemListState extends State<_CartItemList> {
             ),
           )
         : ListView.builder(
-            itemCount: _items.length,
+            itemCount: items.length,
             itemBuilder: (context, index) {
-              final Item item = _items[index];
+              final Item item = items[index];
               return Card(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
-                    leading: SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: ClipRRect(
-                        child: Image.network(
-                          item.image,
-                          fit: BoxFit.contain,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Icon(
-                              Icons.broken_image,
-                              size: 50,
-                              color: Colors.grey,
-                            );
-                          },
+                      leading: SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: ClipRRect(
+                          child: Image.network(
+                            item.image,
+                            fit: BoxFit.contain,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(
+                                Icons.broken_image,
+                                size: 50,
+                                color: Colors.grey,
+                              );
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    title: Text(
-                      item.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    subtitle: Text(
-                      '\$${item.price.toStringAsFixed(2)}',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    trailing: const Icon(
-                      Icons.remove_circle_rounded,
-                      color: Colors.redAccent,
-                    ),
-                  ),
+                      title: Text(
+                        item.name,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      subtitle: Text(
+                        '\$${item.price.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          ref.read(cartProvider.notifier).removeItem(item);
+                          setState(() {});
+                        },
+                        icon: const Icon(
+                          Icons.remove_circle_rounded,
+                          color: Colors.redAccent,
+                        ),
+                      )),
                 ),
               );
             });

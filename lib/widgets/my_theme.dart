@@ -31,8 +31,9 @@ class MyTheme {
 
   static ThemeData darkTheme(BuildContext context) => ThemeData.dark().copyWith(
         colorScheme: ColorScheme.fromSeed(seedColor: dark_primaryColor),
-        primaryColor: dark_primaryColor,
-        primaryColorLight: dark_secondaryColor,
+        primaryColor: dark_secondaryColor,
+        primaryColorDark: dark_primaryColor,
+        primaryColorLight: dark_brightColor,
         textTheme: customTextTheme(),
         scaffoldBackgroundColor: dark_primaryColor,
         shadowColor: dark_primaryColor,

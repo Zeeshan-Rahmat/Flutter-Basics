@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_basics/models/catalog.dart';
+import 'package:flutter_basics/pages/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ItemPage extends StatelessWidget {
+class ItemPage extends ConsumerWidget {
   final Item item;
   const ItemPage({
     super.key,
@@ -10,7 +12,9 @@ class ItemPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bool isAdded = ref.watch(cartProvider).items.contains(item);
+
     const double textGap = 8;
 
     return Scaffold(
@@ -25,20 +29,36 @@ class ItemPage extends StatelessWidget {
               style: Theme.of(context).textTheme.labelLarge,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                if (isAdded) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      duration: Duration(seconds: 2),
+                      content: Text("Item is Already Added"),
+                    ),
+                  );
+                } else {
+                  ref.read(cartProvider.notifier).addItem(item);
+                }
+              },
               style: TextButton.styleFrom(
                 elevation: 0.0,
-                backgroundColor: Theme.of(context).primaryColorLight,
+                backgroundColor: Theme.of(context).primaryColor,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              child: Text(
-                'Add to Cart',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
+              child: isAdded
+                  ? Icon(
+                      Icons.done,
+                      color: Theme.of(context).primaryColorLight,
+                    )
+                  : Icon(
+                      Icons.add_shopping_cart_rounded,
+                      color: Theme.of(context).primaryColorLight,
+                    ),
             ),
           ],
         ),
