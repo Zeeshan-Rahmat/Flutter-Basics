@@ -43,9 +43,16 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, MyRoutes.cartRoute);
+          Navigator.pushNamed(context, MyRoutes.cartRoute).then((value) {
+            if (value == true) {
+              setState(() {});
+            }
+          });
         },
-        child: Icon(CupertinoIcons.cart, color: MyTheme.dark_brightColor,),
+        child: Icon(
+          CupertinoIcons.cart,
+          color: MyTheme.dark_brightColor,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

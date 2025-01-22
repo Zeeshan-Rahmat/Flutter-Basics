@@ -11,18 +11,85 @@ class CartPage extends ConsumerStatefulWidget {
 }
 
 class _CartPageState extends ConsumerState<CartPage> {
+  bool isChanged = false;
+
   @override
   Widget build(BuildContext context) {
+    final items = ref.watch(cartProvider).items;
     final totalPrice = ref.watch(cartProvider).totalPrice;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context, isChanged);
+            },
+            icon: const Icon(Icons.arrow_back)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Expanded(child: _CartItemList()),
+            Expanded(
+                child: items.isEmpty
+                    ? Center(
+                        child: Text(
+                          'Your Cart is Empty',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      )
+                    : ListView.builder(
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final Item item = items[index];
+                          return Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ListTile(
+                                  leading: SizedBox(
+                                    width: 60,
+                                    height: 60,
+                                    child: ClipRRect(
+                                      child: Image.network(
+                                        item.image,
+                                        fit: BoxFit.contain,
+                                        errorBuilder:
+                                            (context, error, stackTrace) {
+                                          return const Icon(
+                                            Icons.broken_image,
+                                            size: 50,
+                                            color: Colors.grey,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  title: Text(
+                                    item.name,
+                                    style:
+                                        Theme.of(context).textTheme.titleMedium,
+                                  ),
+                                  subtitle: Text(
+                                    '\$${item.price.toStringAsFixed(2)}',
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                  ),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      ref
+                                          .read(cartProvider.notifier)
+                                          .removeItem(item);
+                                      isChanged = true;
+                                      setState(() {});
+                                    },
+                                    icon: const Icon(
+                                      Icons.remove_circle_rounded,
+                                      color: Colors.redAccent,
+                                    ),
+                                  )),
+                            ),
+                          );
+                        })),
             const SizedBox(height: 10),
             const Divider(),
             SizedBox(
@@ -67,70 +134,70 @@ class _CartPageState extends ConsumerState<CartPage> {
   }
 }
 
-class _CartItemList extends ConsumerStatefulWidget {
-  const _CartItemList({super.key});
+// class _CartItemList extends ConsumerStatefulWidget {
+//   const _CartItemList({super.key});
 
-  @override
-  ConsumerState<_CartItemList> createState() => _CartItemListState();
-}
+//   @override
+//   ConsumerState<_CartItemList> createState() => _CartItemListState();
+// }
 
-class _CartItemListState extends ConsumerState<_CartItemList> {
-  @override
-  Widget build(BuildContext context) {
-    final items = ref.watch(cartProvider).items;
+// class _CartItemListState extends ConsumerState<_CartItemList> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final items = ref.watch(cartProvider).items;
 
-    return items.isEmpty
-        ? Center(
-            child: Text(
-              'Your Cart is Empty',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-          )
-        : ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              final Item item = items[index];
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                      leading: SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: ClipRRect(
-                          child: Image.network(
-                            item.image,
-                            fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(
-                                Icons.broken_image,
-                                size: 50,
-                                color: Colors.grey,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      title: Text(
-                        item.name,
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      subtitle: Text(
-                        '\$${item.price.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {
-                          ref.read(cartProvider.notifier).removeItem(item);
-                          setState(() {});
-                        },
-                        icon: const Icon(
-                          Icons.remove_circle_rounded,
-                          color: Colors.redAccent,
-                        ),
-                      )),
-                ),
-              );
-            });
-  }
-}
+//     return items.isEmpty
+//         ? Center(
+//             child: Text(
+//               'Your Cart is Empty',
+//               style: Theme.of(context).textTheme.labelMedium,
+//             ),
+//           )
+//         : ListView.builder(
+//             itemCount: items.length,
+//             itemBuilder: (context, index) {
+//               final Item item = items[index];
+//               return Card(
+//                 child: Padding(
+//                   padding: const EdgeInsets.all(8.0),
+//                   child: ListTile(
+//                       leading: SizedBox(
+//                         width: 60,
+//                         height: 60,
+//                         child: ClipRRect(
+//                           child: Image.network(
+//                             item.image,
+//                             fit: BoxFit.contain,
+//                             errorBuilder: (context, error, stackTrace) {
+//                               return const Icon(
+//                                 Icons.broken_image,
+//                                 size: 50,
+//                                 color: Colors.grey,
+//                               );
+//                             },
+//                           ),
+//                         ),
+//                       ),
+//                       title: Text(
+//                         item.name,
+//                         style: Theme.of(context).textTheme.titleMedium,
+//                       ),
+//                       subtitle: Text(
+//                         '\$${item.price.toStringAsFixed(2)}',
+//                         style: Theme.of(context).textTheme.bodyMedium,
+//                       ),
+//                       trailing: IconButton(
+//                         onPressed: () {
+//                           ref.read(cartProvider.notifier).removeItem(item);
+//                           setState(() {});
+//                         },
+//                         icon: const Icon(
+//                           Icons.remove_circle_rounded,
+//                           color: Colors.redAccent,
+//                         ),
+//                       )),
+//                 ),
+//               );
+//             });
+//   }
+// }
