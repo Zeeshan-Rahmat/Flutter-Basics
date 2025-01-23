@@ -9,6 +9,7 @@ import "package:flutter_basics/widgets/custom_drawer.dart";
 import "package:flutter_basics/widgets/item_widget.dart";
 import "package:flutter_basics/widgets/my_theme.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import 'package:http/http.dart' as http;
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -18,6 +19,8 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  final url = "https://api.jsonbin.io/b/604dbddb683e7e079c4eefd3";
+
   @override
   void initState() {
     super.initState();
@@ -27,6 +30,9 @@ class _HomePageState extends ConsumerState<HomePage> {
   void loadData() async {
     final catalogJSON =
         await rootBundle.loadString('assets/files/catalog.json');
+    // final respose = await http.get(Uri.parse(url));
+    // final catalogJSON = respose.body;
+
     final decodedJSON = jsonDecode(catalogJSON) as Map<String, dynamic>;
     var products = decodedJSON['products'] as List<dynamic>;
 
