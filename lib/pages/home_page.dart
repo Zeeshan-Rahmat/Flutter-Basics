@@ -19,7 +19,7 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final url = "https://api.jsonbin.io/b/604dbddb683e7e079c4eefd3";
+  // final url = "https://api.jsonbin.io/b/604dbddb683e7e079c4eefd3";
 
   @override
   void initState() {
